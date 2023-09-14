@@ -23,8 +23,14 @@ The OETCompanion is developed to help OET students enhance their English languag
 To get started with the OET Student Learning Chatbot:
 
 1. Clone this repository to your local machine.
-2. Follow the installation instructions in the `installation.md` file to set up the chatbot environment. ##UNDER CONSTRUCTION THIS IS A TEMPLATE
-3. Launch the chatbot application by running the provided command: `python companion_app.py`.
+2. Open the OPEN_API_KEY file and paste your api key . Remove the contents of the file before pasting.
+3. pip install openai
+4. pip install playsound PyObjC
+5. pip install gTTS wave
+6. pip install streamlit streamlit_lottie watchdog
+7. conda install pyaudio
+
+
 
 ## Usage
 

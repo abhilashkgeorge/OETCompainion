@@ -2,7 +2,7 @@ import os
 import openai
 
 # setup the API key
-home_dir = os.path.expanduser("~")
+home_dir = os.path.expanduser(".")
 openai.api_key_path = os.path.join(home_dir, 'OPENAI_API_KEY')
 
 

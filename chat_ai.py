@@ -2,7 +2,7 @@ import os
 import openai
 import datetime
 
-home_dir = os.path.expanduser("~")
+home_dir = os.path.expanduser(".")
 openai.api_key_path = os.path.join(home_dir, 'OPENAI_API_KEY')
 
 today_date = datetime.date.today()

@@ -5,17 +5,16 @@ import json
 import streamlit as st
 from streamlit_lottie import st_lottie
 
-# local modules
 import audio_recorder
 import tts_converter
 import whisper
 import chat_ai
 
-# constants
+
 LOTTIE_URL = 'https://assets6.lottiefiles.com/packages/lf20_6e0qqtpa.json'
 PROMPT_WAVFILE = 'prompt.wav'
 
-# Create the animation
+# lottie animation file for the floating robot
 def load_lottie(url):
     r = requests.get(url)
     if r.status_code != 200:
@@ -26,7 +25,7 @@ lottie_anim = load_lottie(LOTTIE_URL)
 
 st.set_page_config(page_title="ChatGPT-VA", page_icon='', layout='centered')
 
-# Initialize session state
+
 if "is_recording" not in st.session_state:
     st.session_state.is_recording = False
 if "prompt_text" not in st.session_state:
@@ -35,16 +34,14 @@ if "chat_text" not in st.session_state:
     st.session_state.chat_text = None
 
 
-# Define button callbacks
 def callback_record():
     st.session_state.is_recording = True
-    prompt_box.write("Recording started ...")
+    prompt_box.write("Listening ...")
 
-    # record the prompt
     audio_recorder.record(filename=PROMPT_WAVFILE)
-    prompt_box.write("Processing the prompt ...")
+    prompt_box.write("Processing the question ...")
 
-    # Process recording
+
     prompt = whisper.get_transcription(PROMPT_WAVFILE)
 
     st.session_state.is_recording = False
@@ -57,7 +54,7 @@ def callback_record():
     st.session_state.chat_text = response
 
 
-##########################
+
 with st.container():
     left, right = st.columns([2, 3])
     with left:
@@ -66,10 +63,10 @@ with st.container():
     with right:
         st.subheader('Hi, I am Eduskills OET Voice Assistant!')
 
-        st.write('Press Record to start recording your promot')
+        st.write('Press speak to start recording your voice')
 
         rec_button = st.button(
-            label="Record :microphone:", type='primary',
+            label="Speak :microphone:", type='primary',
             on_click=callback_record,
             disabled=st.session_state.is_recording)
 
@@ -78,19 +75,17 @@ with st.container():
             prompt_box.write(f'Prompt: {st.session_state.prompt_text}')
 
 
-##########################
+
 with st.container():
     st.write('---')
 
     message_box = st.empty()
     if st.session_state.chat_text:
         choice = st.session_state.chat_text['choices'][0]
-        # write and play line by line
         for line in choice['message']['content'].split('\n'):
             if not line:
                 continue
             message_box.write(line)
             tts_converter.run_tts(line)
 
-        # write the entire message
         message_box.write(choice['message']['content'])
